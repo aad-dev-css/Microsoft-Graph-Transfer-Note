@@ -12,8 +12,8 @@ import { LogLevel } from "@azure/msal-browser";
  */
 export const msalConfig = {
     auth: {
-        clientId: "{This App's App ID}",
-        authority: "https://login.microsoftonline.com/{Tenant ID}",
+        clientId: "4e54c733-11da-460b-a2fc-f2a2b00cf5a1",
+        authority: "https://login.microsoftonline.com/aea86db1-0845-4b94-9c5c-108a7d34c09c",
         redirectUri: "http://localhost:3000/"
     },
     cache: {
@@ -59,7 +59,7 @@ export const loginRequestGraph = {
 };
 
 export const loginRequestAPI = {
-    scopes: ["api://{Backend API App ID}/workloads.read.all"]
+    scopes: ["api://734276de-90b0-4f4b-a5f8-3db023870af3/workloads.read.all"]
 };
 
 /**

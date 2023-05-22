@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
-import './styles/App.css';
-import { PageLayout } from './components/PageLayout';
+import '../styles/App.css';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import { loginRequestGraph } from './authConfig';
-import { loginRequestAPI } from './authConfig';
-import { callMsGraph } from './graph';
-import { callAPI } from './graph';
-import { Note } from './components/Note';
-import Home from './pages/Home';
-
-
-/**
- * Renders information about the signed-in user or a button to retrieve data about the user
- */
-
-
-
+import { loginRequestGraph } from '../authConfig';
+import { loginRequestAPI } from '../authConfig';
+import { callMsGraph } from '../graph';
+import { callAPI } from '../graph';
+import { Note } from '../components/Note';
 
 const ProfileContent = () => {
     const { instance, accounts } = useMsal();
@@ -101,7 +91,7 @@ const ProfileContent = () => {
     return (
 
         <>
-                    {apiOutput ? (
+            {apiOutput ? (
                 <Note apiOutput={apiOutput} endpoint={endpointOutput} message={message}  />
             ) : (
                 <p>
@@ -127,7 +117,21 @@ const ProfileContent = () => {
 /**
  * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
  */
-const MainContent = () => {
+// const MainContent = () => {
+//     return (
+//         <div className="App">
+//             <AuthenticatedTemplate>
+//                 <ProfileContent />
+//             </AuthenticatedTemplate>
+
+//             <UnauthenticatedTemplate>
+//                 <h5 className="card-title">Please sign-in to see your profile information.</h5>
+//             </UnauthenticatedTemplate>
+//         </div>
+//     );
+// };
+
+const Home = () => {
     return (
         <div className="App">
             <AuthenticatedTemplate>
@@ -139,12 +143,6 @@ const MainContent = () => {
             </UnauthenticatedTemplate>
         </div>
     );
-};
-
-export default function App() {
-    return (
-        <PageLayout>
-            <Home />
-        </PageLayout>
-    );
 }
+
+export default Home
