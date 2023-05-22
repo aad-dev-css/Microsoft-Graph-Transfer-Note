@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../components/Navbar";
 
 const Feedback = () => {
   return (
-    <div>Feedback</div>
-  )
-}
+    <div>
+      <Navbar />
+      <p>Feedback</p>
+    </div>
+  );
+};
 
-export default Feedback
+export default Feedback;

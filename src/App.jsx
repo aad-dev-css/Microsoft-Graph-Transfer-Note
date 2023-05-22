@@ -1,5 +1,3 @@
-import "./styles/App.css";
-import { PageLayout } from "./components/PageLayout";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Feedback from "./pages/Feedback";
