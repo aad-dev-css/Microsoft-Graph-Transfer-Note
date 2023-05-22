@@ -6,6 +6,7 @@ import { loginRequestAPI } from '../authConfig';
 import { callMsGraph } from '../graph';
 import { callAPI } from '../graph';
 import { Note } from '../components/Note';
+import { PageLayout } from '../components/PageLayout';
 
 const ProfileContent = () => {
     const { instance, accounts } = useMsal();
@@ -114,34 +115,19 @@ const ProfileContent = () => {
     );
 };
 
-/**
- * If a user is authenticated the ProfileContent component above is rendered. Otherwise a message indicating a user is not authenticated is rendered.
- */
-// const MainContent = () => {
-//     return (
-//         <div className="App">
-//             <AuthenticatedTemplate>
-//                 <ProfileContent />
-//             </AuthenticatedTemplate>
-
-//             <UnauthenticatedTemplate>
-//                 <h5 className="card-title">Please sign-in to see your profile information.</h5>
-//             </UnauthenticatedTemplate>
-//         </div>
-//     );
-// };
-
 const Home = () => {
     return (
-        <div className="App">
-            <AuthenticatedTemplate>
-                <ProfileContent />
-            </AuthenticatedTemplate>
+        <PageLayout>
+            <div className="App">
+                <AuthenticatedTemplate>
+                    <ProfileContent />
+                </AuthenticatedTemplate>
 
-            <UnauthenticatedTemplate>
-                <h5 className="card-title">Please sign-in to see your profile information.</h5>
-            </UnauthenticatedTemplate>
-        </div>
+                <UnauthenticatedTemplate>
+                    <h5 className="card-title">Please sign-in to see your profile information.</h5>
+                </UnauthenticatedTemplate>
+            </div>
+        </PageLayout>
     );
 }
 
