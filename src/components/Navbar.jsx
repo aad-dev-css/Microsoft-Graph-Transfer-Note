@@ -15,7 +15,7 @@ const pages = [
 const Navbar = () => {
   const isAuthenticated = useIsAuthenticated();
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", position: "relative" }}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -37,7 +37,7 @@ const Navbar = () => {
           >
             LOGO
           </Typography>
-          <Box>
+          <Box mr={2}>
             {pages.map((item) => (
               <Button key={item.name} sx={{ color: "#fff" }} href={item.route}>
                 {item.name}
