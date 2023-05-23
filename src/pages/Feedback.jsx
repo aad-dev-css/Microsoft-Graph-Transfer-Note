@@ -6,16 +6,24 @@ import {
   useMsal,
 } from "@azure/msal-react";
 import {
+  Alert,
   Box,
   Button,
+  Collapse,
   Container,
+  IconButton,
   TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
+import { loginRequestAPI } from "../authConfig";
+import { submitFeedback } from "../graph";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Feedback = () => {
   const [feedback, setFeedback] = useState({ title: "", description: "" });
+  const { instance, accounts } = useMsal();
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,8 +33,24 @@ const Feedback = () => {
     }));
   };
 
-  const onSubmit = () => {
-    console.log("I was clicked!");
+  const onSubmit = async () => {
+    try {
+      const authResponse = await instance.acquireTokenSilent({
+        ...loginRequestAPI,
+        account: accounts[0],
+      });
+      const apiResponse = await submitFeedback(
+        authResponse.accessToken,
+        feedback
+      );
+      console.log(apiResponse);
+      if (apiResponse) {
+        setOpen(true);
+        setFeedback({ title: "", description: "" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -39,7 +63,7 @@ const Feedback = () => {
             p: 3,
             maxWidth: "100%",
             justifyContent: "center",
-            backgroundColor: "red",
+            // backgroundColor: "red",
           }}
         >
           <Toolbar />
@@ -71,8 +95,29 @@ const Feedback = () => {
                 fullWidth
                 sx={{ marginTop: 2, marginBottom: 2 }}
               />
-              <Button variant="contained">Submit</Button>
+              <Button variant="contained" onClick={onSubmit}>
+                Submit
+              </Button>
             </Box>
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ marginTop: 10 }}
+              >
+                Feedback submitted successfully!
+              </Alert>
+            </Collapse>
           </AuthenticatedTemplate>
         </Box>
       </Container>

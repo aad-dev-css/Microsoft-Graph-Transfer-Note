@@ -6,10 +6,12 @@ import React from "react";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { SignInButton } from "./SignInButton";
 import { SignOutButton } from "./SignOutButton";
+import SosIcon from "@mui/icons-material/Sos";
 
 const pages = [
   { name: "Home", route: "/" },
   { name: "Feedback", route: "/feedback" },
+  { name: "Roadmap", route: "/roadmap" },
 ];
 
 const Navbar = () => {
@@ -19,7 +21,7 @@ const Navbar = () => {
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
-          <AdbIcon sx={{ mr: 1 }} />
+          {/* <SosIcon sx={{ mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -30,12 +32,12 @@ const Navbar = () => {
               mr: 2,
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
+              letterSpacing: ".1rem",
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            LOGO
+            MS Graph Router Helper
           </Typography>
           <Box mr={2}>
             {pages.map((item) => (
