@@ -1,12 +1,10 @@
 import { AppBar, CssBaseline, Toolbar, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import AdbIcon from "@mui/icons-material/Adb";
 import React from "react";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { SignInButton } from "./SignInButton";
 import { SignOutButton } from "./SignOutButton";
-import SosIcon from "@mui/icons-material/Sos";
 
 const pages = [
   { name: "Home", route: "/" },
@@ -21,7 +19,6 @@ const Navbar = () => {
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
-          {/* <SosIcon sx={{ mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap

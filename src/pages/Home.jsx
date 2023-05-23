@@ -10,9 +10,15 @@ import { loginRequestAPI } from "../authConfig";
 import { callMsGraph } from "../graph";
 import { callAPI } from "../graph";
 import { Note } from "../components/Note";
-import { PageLayout } from "../components/PageLayout";
 import Navbar from "../components/Navbar";
-import { Box, Container, Toolbar } from "@mui/material";
+import {
+  Box,
+  Container,
+  Toolbar,
+  TextField,
+  Button,
+  Typography,
+} from "@mui/material";
 
 const ProfileContent = () => {
   const { instance, accounts } = useMsal();
@@ -105,15 +111,18 @@ const ProfileContent = () => {
         <p>Insert an endpoint (e.g. "me/manager"):</p>
       )}
       <div>
-        <input
-          type="text"
+        <TextField
           id="endpoint"
-          name="endpoint"
-          onChange={handleChange}
+          name="title"
           value={endpoint}
+          onChange={handleChange}
+          placeholder="MS Graph Endpoint"
+          fullWidth
+          sx={{ marginTop: 2, marginBottom: 2 }}
         />
-
-        <button onClick={onButtonClick}>Generate Note</button>
+        <Button variant="contained" onClick={onButtonClick}>
+          Submit
+        </Button>
       </div>
     </>
   );
@@ -130,7 +139,6 @@ const Home = () => {
             p: 3,
             maxWidth: "100%",
             justifyContent: "center",
-            // backgroundColor: "red",
           }}
         >
           <Toolbar />
@@ -139,9 +147,12 @@ const Home = () => {
           </AuthenticatedTemplate>
 
           <UnauthenticatedTemplate>
-            <h5 className="card-title">
-              Please sign-in to see your profile information.
-            </h5>
+            <Typography
+              variant="h5"
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              Sign In to use this Application!
+            </Typography>
           </UnauthenticatedTemplate>
         </Box>
       </Container>

@@ -1,39 +1,27 @@
 import React from "react";
 import { useMsal } from "@azure/msal-react";
-import { loginRequestAPI, loginRequestGraph } from "../authConfig";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
+import { loginRequestAPI } from "../authConfig";
+import { Button } from "@mui/material";
 
 /**
- * Renders a drop down button with child buttons for logging in with a popup or redirect
+ * Renders a sign in button
  */
 export const SignInButton = () => {
   const { instance } = useMsal();
 
-  const handleLogin = (loginType) => {
-    if (loginType === "popup") {
-      instance.loginPopup(loginRequestAPI).catch((e) => {
-        console.log(e);
-      });
-    } else if (loginType === "redirect") {
-      instance.loginRedirect(loginRequestAPI).catch((e) => {
-        console.log(e);
-      });
-    }
+  const handleLogin = () => {
+    instance.loginRedirect(loginRequestAPI).catch((e) => {
+      console.log(e);
+    });
   };
   return (
-    <DropdownButton
-      variant="secondary"
-      className="ml-auto"
-      drop="start"
-      title="Sign In"
+    <Button
+      size="medium"
+      variant="contained"
+      sx={{ color: "white", backgroundColor: "gray" }}
+      onClick={() => handleLogin()}
     >
-      <Dropdown.Item as="button" onClick={() => handleLogin("popup")}>
-        Sign in using Popup
-      </Dropdown.Item>
-      <Dropdown.Item as="button" onClick={() => handleLogin("redirect")}>
-        Sign in using Redirect
-      </Dropdown.Item>
-    </DropdownButton>
+      Sign In
+    </Button>
   );
 };

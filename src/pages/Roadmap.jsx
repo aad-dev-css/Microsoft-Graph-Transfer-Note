@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { Box, Container, Toolbar } from "@mui/material";
+import { Box, Container, Toolbar, Typography } from "@mui/material";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const Roadmap = () => {
   return (
@@ -13,11 +14,20 @@ const Roadmap = () => {
             p: 3,
             maxWidth: "100%",
             justifyContent: "center",
-            // backgroundColor: "red",
           }}
         >
           <Toolbar />
-          ROADMAP PAGE
+          <Typography>
+            <ArrowRightIcon /> Allow v1.0 and beta.
+          </Typography>
+          <Typography>
+            <ArrowRightIcon />
+            Allow other methods further than GET.
+          </Typography>
+          <Typography>
+            <ArrowRightIcon />
+            Allow to pass a body on the request.
+          </Typography>
         </Box>
       </Container>
     </div>

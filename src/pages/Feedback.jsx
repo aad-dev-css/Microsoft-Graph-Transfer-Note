@@ -69,7 +69,12 @@ const Feedback = () => {
           <Toolbar />
 
           <UnauthenticatedTemplate>
-            <p>Sign In to submit feedback!</p>
+            <Typography
+              variant="h5"
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              Sign In to submit feedback!
+            </Typography>
           </UnauthenticatedTemplate>
 
           <AuthenticatedTemplate>
