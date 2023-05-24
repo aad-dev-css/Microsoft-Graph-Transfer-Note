@@ -8,7 +8,10 @@ Repository for the MS Graph API Transfer Note project.
 
 -Based on the following sample: https://github.com/Azure-Samples/ms-identity-javascript-react-spa
 
--Follow the instructions on the sample above to configure the App Registration and the project's authConfig.json file.
+-To run locally, simply create a .env file with the following variables:
+REACT_APP_REDIRECT_URI=http://localhost:3000/
+REACT_APP_CLIENT_ID=
+REACT_APP_TENANT_ID=
 
 Todo:
 
@@ -17,8 +20,6 @@ Todo:
 -Make it support beta endpoints as well.
 -Make it support calls with methods other than GET.
 
-
 **Backend:**
 
 -See the MS Graph API Transfer Note API repo.
-

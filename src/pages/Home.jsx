@@ -67,7 +67,7 @@ const ProfileContent = () => {
     } else if (payload.TargetWorkloadId !== "Null" && payload.Team === "Null") {
       newMessage = "Team/Routing currently not found in this webapp's API.";
     } else {
-      newMessage = `The https://graph.microsoft.com/v1.0/${endpoint} endpoint has the ${payload.TargetWorkloadId} TargetWorkloadId, which is within the support boundaries of the ${payload.Team} Support Team, in the ${payload.Routing} SAP.`;
+      newMessage = `The ${endpoint} endpoint has the ${payload.TargetWorkloadId} TargetWorkloadId, which is within the support boundaries of the ${payload.Team} Support Team, in the ${payload.Routing} SAP.`;
     }
 
     setMessage(newMessage);
@@ -108,7 +108,10 @@ const ProfileContent = () => {
           message={message}
         />
       ) : (
-        <p>Insert an endpoint (e.g. "me/manager"):</p>
+        <p>
+          Insert an endpoint (e.g.
+          "https://graph.microsoft.com/v1.0/me/manager"):
+        </p>
       )}
       <div>
         <TextField

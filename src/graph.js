@@ -9,7 +9,7 @@ export async function callMsGraph(accessToken, endpoint) {
     headers: headers,
   };
 
-  return fetch(`https://graph.microsoft.com/v1.0/${endpoint}?whatif`, options)
+  return fetch(`${endpoint}?whatif`, options)
     .then((response) => response.json())
     .catch((error) => console.log(error));
 }
