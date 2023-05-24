@@ -15,7 +15,7 @@ export const msalConfig = {
     clientId: "4e54c733-11da-460b-a2fc-f2a2b00cf5a1",
     authority:
       "https://login.microsoftonline.com/aea86db1-0845-4b94-9c5c-108a7d34c09c",
-    redirectUri: "http://localhost:3000/",
+    redirectUri: "https://workloads-spa.netlify.app/",
   },
   cache: {
     cacheLocation: "sessionStorage", // This configures where your cache will be stored
