@@ -1,13 +1,18 @@
-export async function callMsGraph(accessToken, endpoint) {
+export async function callMsGraph(accessToken, endpoint, method, body) {
   const headers = new Headers();
   const bearer = `Bearer ${accessToken}`;
 
   headers.append("Authorization", bearer);
+  headers.append("Content-Type", "application/json");
 
   const options = {
-    method: "GET",
+    method: method,
     headers: headers,
   };
+
+  if(method !== "GET"){
+    options.body = body
+  }
 
   return fetch(`${endpoint}?whatif`, options)
     .then((response) => response.json())
