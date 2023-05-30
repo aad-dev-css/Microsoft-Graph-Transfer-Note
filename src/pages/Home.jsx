@@ -18,7 +18,6 @@ import {
   TextField,
   Button,
   Typography,
-  InputLabel,
   Select,
   MenuItem
 } from "@mui/material";
@@ -69,7 +68,7 @@ const ProfileContent = () => {
               Routing: "Null",
             };
             var isBadRequest = false;
-            if (response.error.message == "Unable to read JSON request payload. Please ensure Content-Type header is set and payload is of valid JSON format.") isBadRequest = true;
+            if (response.error.message === "Unable to read JSON request payload. Please ensure Content-Type header is set and payload is of valid JSON format.") isBadRequest = true;
             setResult(invalidObj,isBadRequest);
           }
         });
