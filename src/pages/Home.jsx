@@ -35,19 +35,21 @@ const ProfileContent = () => {
     setEndpoint(event.target.value);
   };
 
+  const copyToClipboard = () => navigator.clipboard.writeText(message)
+
   const handleBodyChange = (event) => {
     setBody(event.target.value);
   };
 
   const onButtonClick = () => {
-    RequestWhatIf(endpoint,method,body);
+    RequestWhatIf(endpoint, method, body);
   };
 
   const handleMethodChange = (event) => {
     setMethod(event.target.value);
   };
 
-  function RequestWhatIf(endpoint,method,body) {
+  function RequestWhatIf(endpoint, method, body) {
     setEndpointOutput(endpoint);
     setMethod(method)
     // Silently acquires an access token which is then attached to a request for MS Graph data
@@ -60,7 +62,7 @@ const ProfileContent = () => {
       .then((response) => {
         callMsGraph(response.accessToken, endpoint, method, body).then((response) => {
           if (response.TargetWorkloadId !== undefined) {
-            RequestAPI(response,method);
+            RequestAPI(response, method);
           } else {
             const invalidObj = {
               TargetWorkloadId: "Null",
@@ -69,21 +71,21 @@ const ProfileContent = () => {
             };
             var isBadRequest = false;
             if (response.error.message === "Unable to read JSON request payload. Please ensure Content-Type header is set and payload is of valid JSON format.") isBadRequest = true;
-            setResult(invalidObj,isBadRequest);
+            setResult(invalidObj, isBadRequest);
           }
         });
       });
   }
 
-  function setResult(payload,isBadRequest) {
+  function setResult(payload, isBadRequest) {
     var newMessage = "";
     if (payload.TargetWorkloadId === "Null") {
-      if(isBadRequest){
+      if (isBadRequest) {
         newMessage =
-        "Bad request (Unable to read JSON request payload). Please validate or fill request body.";
-      }else{
+          "Bad request (Unable to read JSON request payload). Please validate or fill request body.";
+      } else {
         newMessage =
-        "Invalid MS Graph API endpoint. Please confirm if the endpoint inserted is correct and well-formated e.g. me/manager";
+          "Invalid MS Graph API endpoint. Please confirm if the endpoint inserted is correct and well-formated e.g. me/manager";
       }
     } else if (payload.TargetWorkloadId !== "Null" && payload.Team === "Null") {
       newMessage = "Team/Routing currently not found in this webapp's API.";
@@ -122,32 +124,34 @@ const ProfileContent = () => {
 
   return (
     <>
-      {apiOutput ? (
+      {apiOutput ? (<div>
         <Note
           apiOutput={apiOutput}
           endpoint={endpointOutput}
           message={message}
         />
-      ) : (
+        <Button onClick={copyToClipboard} sx={{ marginTop: 2, marginBottom: 2 }}>Copy to Clipboard</Button>
+      </div>) : (
         <p>
           Insert an endpoint (e.g.
           "https://graph.microsoft.com/v1.0/me/manager"):
         </p>
       )}
-            <Select
-    labelId="simple-select-label"
-    id="simple-select"
-    value={method}
-    label="Method"
-    sx={{ marginTop: 2, marginBottom: 2 }}
-    onChange={handleMethodChange}
-  >
-    <MenuItem value={"GET"}>GET</MenuItem>
-    <MenuItem value={"POST"}>POST</MenuItem>
-    <MenuItem value={"PATCH"}>PATCH</MenuItem>
-    <MenuItem value={"PUT"}>PUT</MenuItem>
-    <MenuItem value={"DELETE"}>DELETE</MenuItem>
-  </Select>
+
+      <Select
+        labelId="simple-select-label"
+        id="simple-select"
+        value={method}
+        label="Method"
+        sx={{ marginTop: 2, marginBottom: 2 }}
+        onChange={handleMethodChange}
+      >
+        <MenuItem value={"GET"}>GET</MenuItem>
+        <MenuItem value={"POST"}>POST</MenuItem>
+        <MenuItem value={"PATCH"}>PATCH</MenuItem>
+        <MenuItem value={"PUT"}>PUT</MenuItem>
+        <MenuItem value={"DELETE"}>DELETE</MenuItem>
+      </Select>
       <div>
         <TextField
           id="endpoint"
@@ -158,21 +162,21 @@ const ProfileContent = () => {
           fullWidth
           sx={{ marginTop: 2, marginBottom: 2 }}
         />
-<div>
-<TextField
-          id="outlined-multiline-static"
-          label="Body"
-          value={body}
-          onChange={handleBodyChange}
-          multiline
-          fullWidth
-          rows={4}
-          sx={{ marginTop: 2, marginBottom: 2 }}
-        />
-        <Button variant="contained" onClick={onButtonClick}>
-          Submit
-        </Button>
-</div>
+        <div>
+          <TextField
+            id="outlined-multiline-static"
+            label="Body"
+            value={body}
+            onChange={handleBodyChange}
+            multiline
+            fullWidth
+            rows={4}
+            sx={{ marginTop: 2, marginBottom: 2 }}
+          />
+          <Button variant="contained" onClick={onButtonClick}>
+            Submit
+          </Button>
+        </div>
       </div>
     </>
   );
