@@ -53,7 +53,6 @@ const ProfileContent = () => {
     setEndpointOutput(endpoint);
     setMethod(method)
     // Silently acquires an access token which is then attached to a request for MS Graph data
-    console.log("method: " + method)
     instance
       .acquireTokenSilent({
         ...loginRequestGraph,
@@ -61,25 +60,54 @@ const ProfileContent = () => {
       })
       .then((response) => {
         callMsGraph(response.accessToken, endpoint, method, body).then((response) => {
-          if (response.TargetWorkloadId !== undefined) {
-            RequestAPI(response, method);
-          } else {
-            const invalidObj = {
-              TargetWorkloadId: "Null",
-              Team: "Null",
-              Routing: "Null",
-            };
+          var workloadsIds = [];
+          var responses = [];
+
+          if (response.hasOwnProperty('TargetWorkloadId') === true) {
+            workloadsIds.push(response.TargetWorkloadId);
+          } else{
+            for(const key in response){
+              const nestedProp = response[key]
+              if(nestedProp.hasOwnProperty('TargetWorkloadId')){
+                workloadsIds.push(nestedProp.TargetWorkloadId);
+              }
+            
+            }
+       
+            }
+            if(workloadsIds.length === 0){
+              const invalidObj = {
+                TargetWorkloadId: "Null",
+                Team: "Null",
+                Routing: "Null",
+            }
+            workloadsIds.push(invalidObj);
             var isBadRequest = false;
-            if (response.error.message === "Unable to read JSON request payload. Please ensure Content-Type header is set and payload is of valid JSON format.") isBadRequest = true;
-            setResult(invalidObj, isBadRequest);
+            if (response.error.message.includes("JSON")) isBadRequest = true;
+            setResult(workloadsIds, isBadRequest);
+          }else{
+            RequestAPI(responses,workloadsIds)
           }
         });
       });
   }
 
-  function setResult(payload, isBadRequest) {
+  function setResult(responses, isBadRequest) {
     var newMessage = "";
-    if (payload.TargetWorkloadId === "Null") {
+    var includesMoreTeams = false;
+    if(responses.length > 1){
+      responses.forEach((response, index) => {
+        if(index !== 0){
+          if (!responses[0].TargetWorkloadId.includes(response.TargetWorkloadId)) responses[0].TargetWorkloadId += " + " + response.TargetWorkloadId;
+          if (!responses[0].Team.includes(response.Team)){
+            responses[0].Team += " + " + response.Team;
+            includesMoreTeams = true;
+          }
+          if (!responses[0].Routing.includes(response.Routing)) responses[0].Routing += " + " + response.Routing;
+        }
+      })
+    }
+    if (responses[0].TargetWorkloadId === "Null") {
       if (isBadRequest) {
         newMessage =
           "Bad request (Unable to read JSON request payload). Please validate or fill request body.";
@@ -87,39 +115,42 @@ const ProfileContent = () => {
         newMessage =
           "Invalid MS Graph API endpoint. Please confirm if the endpoint inserted is correct and well-formated e.g. me/manager";
       }
-    } else if (payload.TargetWorkloadId !== "Null" && payload.Team === "Null") {
-      newMessage = "Team/Routing currently not found in this webapp's API.";
     } else {
-      newMessage = `The ${endpoint} endpoint has the ${payload.TargetWorkloadId} TargetWorkloadId, which is within the support boundaries of the ${payload.Team} Support Team, in the ${payload.Routing} SAP.`;
+        newMessage = `The ${endpoint} endpoint has the ${responses[0].TargetWorkloadId} TargetWorkloadIds, which is within the support boundaries of ${responses[0].Team} Support Teams, in the ${responses[0].Routing} SAPs.`;
+        if (includesMoreTeams) newMessage += " The respective team to handle the case depends on the issue being faced."
+        if (responses[0].Team.includes("Null") || responses[0].Routing.includes("Null")) newMessage += " One or more Teams/SAPs were returned as Null. Do not use the note as it is, instead please report this in our Feedback form, describing the endpoint and the method used."
     }
 
     setMessage(newMessage);
-    setApiOutput(payload);
+    setApiOutput(responses[0]);
   }
 
-  function RequestAPI(payload) {
-    // Silently acquires an access token which is then attached to a request for MS Graph data
+  function RequestAPI(responses, workloadsIds){
     instance
-      .acquireTokenSilent({
-        ...loginRequestAPI,
-        account: accounts[0],
-      })
-      .then((response) => {
-        callAPI(response.accessToken, payload).then((response) => {
-          if (response.TargetWorkloadId !== undefined) {
-            setResult(response);
-            console.log("valid");
-          } else {
-            const invalidObj = {
-              TargetWorkloadId: payload.TargetWorkloadId,
-              Team: "Null",
-              Routing: "Null",
-            };
-            console.log("invalid");
-            setResult(invalidObj);
-          }
-        });
+    .acquireTokenSilent({
+      ...loginRequestAPI,
+      account: accounts[0],
+    })
+    .then((response) => {
+      callAPI(response.accessToken, workloadsIds[responses.length]).then((output) => {
+        if (output.TargetWorkloadId !== undefined) {
+          responses.push(output)
+        } else {
+          const invalidObj = {
+            TargetWorkloadId: workloadsIds[responses.length],
+            Team: "Null",
+            Routing: "Null",
+          };
+          responses.push(invalidObj)
+        }
+
+        if(responses.length === workloadsIds.length){
+          setResult(responses,false)
+        }else{
+          RequestAPI(responses, workloadsIds)
+        }
       });
+    });
   }
 
   return (

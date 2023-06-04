@@ -14,12 +14,18 @@ export async function callMsGraph(accessToken, endpoint, method, body) {
     options.body = body
   }
 
-  return fetch(`${endpoint}?whatif`, options)
+  if(endpoint.includes("?")){
+    endpoint = endpoint + "&whatif"
+  }else{
+    endpoint = endpoint + "?whatif"
+  }
+
+  return fetch(endpoint, options)
     .then((response) => response.json())
     .catch((error) => console.log(error));
 }
 
-export async function callAPI(accessToken, response) {
+export async function callAPI(accessToken, workloadId) {
   const headers = new Headers();
   const bearer = `Bearer ${accessToken}`;
 
@@ -31,7 +37,7 @@ export async function callAPI(accessToken, response) {
   };
 
   return fetch(
-    `https://workloads-api.azurewebsites.net/workloads/${response.TargetWorkloadId}`,
+    `https://workloads-api.azurewebsites.net/workloads/${workloadId}`,
     options
   )
     .then((response) => response.json())
