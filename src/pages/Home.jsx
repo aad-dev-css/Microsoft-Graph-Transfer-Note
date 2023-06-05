@@ -116,9 +116,9 @@ const ProfileContent = () => {
           "Invalid MS Graph API endpoint. Please confirm if the endpoint inserted is correct and well-formated e.g. me/manager";
       }
     } else {
-        newMessage = `The ${endpoint} endpoint has the ${responses[0].TargetWorkloadId} TargetWorkloadIds, which is within the support boundaries of ${responses[0].Team} Support Teams, in the ${responses[0].Routing} SAPs.`;
-        if (includesMoreTeams) newMessage += " The respective team to handle the case depends on the issue being faced."
-        if (responses[0].Team.includes("Null") || responses[0].Routing.includes("Null")) newMessage += " One or more Teams/SAPs were returned as Null. Do not use the note as it is, instead please report this in our Feedback form, describing the endpoint and the method used."
+        newMessage = ` • The ${endpoint} endpoint has the ${responses[0].TargetWorkloadId} TargetWorkloadIds \n • This workload is within the support boundaries of ${responses[0].Team} Support Teams \n • The corresponding SAPs are: ${responses[0].Routing}`;
+        if (includesMoreTeams) newMessage += " \n The respective team to handle the case depends on the issue being faced."
+        if (responses[0].Team.includes("Null") || responses[0].Routing.includes("Null")) newMessage += " \n One or more Teams/SAPs were returned as Null. Do not use the note as it is, instead please report this in our Feedback form, describing the endpoint and the method used."
     }
 
     setMessage(newMessage);
