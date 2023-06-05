@@ -18,15 +18,7 @@ const Roadmap = () => {
         >
           <Toolbar />
           <Typography>
-            <ArrowRightIcon /> Allow v1.0 and beta.
-          </Typography>
-          <Typography>
-            <ArrowRightIcon />
-            Allow other methods further than GET.
-          </Typography>
-          <Typography>
-            <ArrowRightIcon />
-            Allow to pass a body on the request.
+            <ArrowRightIcon /> Display PG contacts for AAD Dev-supported endpoints.
           </Typography>
         </Box>
       </Container>
