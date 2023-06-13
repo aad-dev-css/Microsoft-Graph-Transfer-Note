@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { Box, Container, Toolbar, Typography } from "@mui/material";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
@@ -22,6 +23,7 @@ const Roadmap = () => {
           </Typography>
         </Box>
       </Container>
+      <Footer />
     </div>
   );
 };

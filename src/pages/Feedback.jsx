@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
@@ -126,6 +127,7 @@ const Feedback = () => {
           </AuthenticatedTemplate>
         </Box>
       </Container>
+      <Footer />
     </div>
   );
 };

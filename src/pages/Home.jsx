@@ -11,6 +11,7 @@ import { callMsGraph } from "../graph";
 import { callAPI } from "../graph";
 import { Note } from "../components/Note";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import {
   Box,
   Container,
@@ -241,6 +242,7 @@ const Home = () => {
           </UnauthenticatedTemplate>
         </Box>
       </Container>
+      <Container maxWidth = "false" sx={{paddingLeft: "0px !important"}}> <Footer /></Container>
     </div>
   );
 };

@@ -6,7 +6,7 @@ export const Note = (props) => {
             <p><strong>TargetWorkloadId: </strong> {props.apiOutput.TargetWorkloadId}</p>
             <p><strong>Team: </strong> {props.apiOutput.Team}</p>
             <p><strong>Routing: </strong> {props.apiOutput.Routing}</p>
-            <p style={{'white-space': 'pre-line'}}><strong>{props.message}</strong></p>
+            <p style={{whiteSpace: 'pre-line'}}><strong>{props.message}</strong></p>
         </div>
     );
 };
