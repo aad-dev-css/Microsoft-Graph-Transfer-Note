@@ -9,6 +9,7 @@ const Footer = () => {
         padding: '1px',
         textAlign: 'center',
         backgroundColor: '#1976d2',
+        width: '100%'
     }
 
     let styleText = {
