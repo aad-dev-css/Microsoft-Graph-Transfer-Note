@@ -10,6 +10,7 @@ const pages = [
   { name: "Home", route: "/" },
   { name: "Feedback", route: "/feedback" },
   { name: "Roadmap", route: "/roadmap" },
+  { name: "Known Issues", route: "/knownissues" }
 ];
 
 const Navbar = () => {
