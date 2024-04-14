@@ -5,6 +5,9 @@ import {
   UnauthenticatedTemplate,
   useMsal,
 } from "@azure/msal-react";
+import {
+  InteractionRequiredAuthError
+} from "@azure/msal-browser";
 import { loginRequestGraph } from "../authConfig";
 import { loginRequestAPI } from "../authConfig";
 import { callMsGraph } from "../graph";
@@ -62,6 +65,13 @@ const ProfileContent = () => {
       .acquireTokenSilent({
         ...loginRequestGraph,
         account: accounts[0],
+      }).catch((error) => {
+        if (error instanceof InteractionRequiredAuthError) {
+          instance.acquireTokenRedirect({
+            ...loginRequestGraph,
+            account: accounts[0],
+          });
+        }
       })
       .then((response) => {
         callMsGraph(response.accessToken, endpoint, method, body).then((response) => {
@@ -139,6 +149,13 @@ const ProfileContent = () => {
       .acquireTokenSilent({
         ...loginRequestAPI,
         account: accounts[0],
+      }).catch((error) => {
+        if (error instanceof InteractionRequiredAuthError) {
+          instance.acquireTokenRedirect({
+            ...loginRequestAPI,
+            account: accounts[0],
+          });
+        }
       })
       .then((response) => {
         submitHelpful(response.accessToken, true)
@@ -152,6 +169,13 @@ const ProfileContent = () => {
       .acquireTokenSilent({
         ...loginRequestAPI,
         account: accounts[0],
+      }).catch((error) => {
+        if (error instanceof InteractionRequiredAuthError) {
+          instance.acquireTokenRedirect({
+            ...loginRequestAPI,
+            account: accounts[0],
+          });
+        }
       })
       .then((response) => {
         submitHelpful(response.accessToken, false)
@@ -163,6 +187,13 @@ const ProfileContent = () => {
       .acquireTokenSilent({
         ...loginRequestAPI,
         account: accounts[0],
+      }).catch((error) => {
+        if (error instanceof InteractionRequiredAuthError) {
+          instance.acquireTokenRedirect({
+            ...loginRequestAPI,
+            account: accounts[0],
+          });
+        }
       })
       .then((response) => {
         callAPI(response.accessToken, workloadsIds[responses.length]).then((output) => {
