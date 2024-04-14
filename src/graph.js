@@ -64,3 +64,23 @@ export async function submitFeedback(accessToken, feedback) {
     .then((response) => response.json())
     .catch((error) => console.log(error));
 }
+
+export async function submitHelpful(accessToken, wasHelpful) {
+  const headers = new Headers();
+  const bearer = `Bearer ${accessToken}`;
+
+  headers.append("Authorization", bearer);
+  headers.append("Content-Type", "application/json");
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      DidItHelp: wasHelpful
+    }),
+  };
+
+  return fetch("https://workloads-api.azurewebsites.net/helpful", options)
+    .then((response) => response.json())
+    .catch((error) => console.log(error));
+}
